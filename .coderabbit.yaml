@@ -1,0 +1,37 @@
+# yaml-language-server: $schema=https://coderabbit.ai/integrations/schema.v2.json
+# Inherit settings from the organization-level .coderabbit.yaml configuration.
+inheritance: true
+reviews:
+  instructions: >-
+    This is the cloud-network-config-controller (CNCC). It is an OpenShift
+    controller/operator that interfaces with cloud provider APIs (AWS, Azure, GCP,
+    OpenStack) to manage private IP address assignments on VM instances associated
+    with Kubernetes nodes. It manages the CloudPrivateIPConfig CRD
+    (cloud.network.openshift.io/v1) and annotates node objects with egress IP
+    capacity and subnet information. Reviews should consider: multi-cloud provider
+    correctness (AWS, Azure, GCP, OpenStack), credential handling and rotation
+    safety, atomic add/delete control loop semantics, finalizer correctness,
+    backward compatibility, upgrade safety, and IPv4/IPv6 dual-stack support.
+  high_level_summary: true
+  high_level_summary_in_walkthrough: true
+  poem: false
+  path_instructions:
+    - path: '**'
+      instructions: |
+        - Focus on major issues impacting performance, readability, maintainability and security.
+        - Avoid nitpicks and avoid verbosity.
+  path_filters:
+    - "!vendor/**"
+    - "!_output/**"
+  auto_review:
+    drafts: false
+    ignore_title_keywords:
+      - WIP
+      - DNM
+    # To exclude labels, be sure to negate the label with '!'.
+    # Non-negated values turn this into an allowlist.
+    labels:
+      - '!work-in-progress'
+  slop_detection:
+    enabled: true
+    label: "coderabbit/ai-slop"
